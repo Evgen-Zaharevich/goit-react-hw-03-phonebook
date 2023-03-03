@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const ContainerApp = styled.section``;
+
 export const Container = styled.div`
   display: flex;
   justify-content: center;

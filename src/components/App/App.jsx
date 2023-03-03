@@ -9,6 +9,7 @@ import {
   ContainerPhonebook,
   ContainerContacts,
   BGI,
+  ContainerApp,
 } from 'components/App/App.styled';
 
 export class App extends Component {
@@ -20,6 +21,20 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+
+    if (contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
+
+  componentDidMount = () => {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    this.setState({ contacts: parsedContacts });
   };
 
   addNewContact = newContact => {
@@ -67,7 +82,7 @@ export class App extends Component {
       filter.length > 0 ? this.getFilteredContacts(filter) : contacts;
 
     return (
-      <>
+      <ContainerApp>
         <BGI>
           <Container>
             <ContainerPhonebook>
@@ -86,7 +101,7 @@ export class App extends Component {
             </ContainerContacts>
           </Container>
         </BGI>
-      </>
+      </ContainerApp>
     );
   }
 }
