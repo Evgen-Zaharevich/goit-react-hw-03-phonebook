@@ -23,20 +23,19 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount = () => {
+    const localData = JSON.parse(localStorage.getItem('contacts'));
+    if (localData) {
+      return this.setState({ contacts: [...localData] });
+    }
+  };
+
   componentDidUpdate(prevProps, prevState) {
     const { contacts } = this.state;
-
-    if (contacts !== prevState.contacts) {
+    if (prevState.contacts !== contacts) {
       localStorage.setItem('contacts', JSON.stringify(contacts));
     }
   }
-
-  componentDidMount = () => {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    this.setState({ contacts: [...parsedContacts] });
-  };
 
   addNewContact = newContact => {
     const { contacts } = this.state;
